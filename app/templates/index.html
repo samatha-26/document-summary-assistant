@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📄 Smart Document Summarizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-content">
+            <h1>📄 Smart Document Summarizer</h1>
+            <p>Transform lengthy documents into concise, structured summaries with AI-powered analysis</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="upload-card">
+            <div class="card-header">
+                <h2>🚀 Get Started</h2>
+                <p>Upload your document and let AI do the magic</p>
+            </div>
+
+            <form action="{{ url_for('summary') }}" method="post" enctype="multipart/form-data" class="upload-form">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📎</div>
+                    <div class="upload-text">
+                        <p class="primary-text">Drop your file here or click to browse</p>
+                        <p class="secondary-text">Supports PDF and image files (PNG, JPG, JPEG, GIF)</p>
+                    </div>
+                    <input type="file" id="file" name="file" accept=".pdf,.png,.jpg,.jpeg,.gif" required hidden>
+                    <label for="file" class="upload-btn">Choose File</label>
+                </div>
+
+                <div class="file-info" id="fileInfo" style="display: none;">
+                    <div class="file-details">
+                        <span class="file-icon">📄</span>
+                        <span class="file-name" id="fileName"></span>
+                        <span class="file-size" id="fileSize"></span>
+                    </div>
+                    <button type="button" class="remove-file" id="removeFile">✕</button>
+                </div>
+
+                <button type="submit" class="btn-primary" id="submitBtn">
+                    <span class="btn-text">Generate Summary</span>
+                    <span class="btn-icon">⚡</span>
+                </button>
+            </form>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for message in messages %}
+                            <div class="flash {{ 'error' if 'error' in message.lower() else 'success' }}">
+                                <span class="flash-icon">{{ '❌' if 'error' in message.lower() else '✅' }}</span>
+                                <span class="flash-text">{{ message }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🤖</div>
+                <h3>AI-Powered</h3>
+                <p>Advanced NLP algorithms extract key insights</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📊</div>
+                <h3>Structured Output</h3>
+                <p>Organized summaries with clear sections</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <h3>Fast Processing</h3>
+                <p>Quick analysis of documents and images</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
